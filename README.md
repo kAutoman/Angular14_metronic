@@ -1,6 +1,6 @@
-# Demo1
+# Angular14 + Metronic 8 (Order managing system)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.x.x.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.x.x.
 
 ## Development server
 
