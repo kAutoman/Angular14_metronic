@@ -33,15 +33,11 @@ function getChartOptions(height: number) {
     series: [
       {
         name: 'Net Profit',
-        data: [30, 30, 50, 50, 35, 35],
+        data: [30, 30, 50, 50, 35, 35,30, 30, 50,70,120,53],
       },
       {
         name: 'Revenue',
-        data: [55, 20, 20, 20, 70, 70],
-      },
-      {
-        name: 'Expenses',
-        data: [60, 60, 40, 40, 30, 30],
+        data: [55, 20, 20, 20, 70, 70,30, 30, 50, 80,130,30],
       },
     ],
     chart: {
@@ -51,12 +47,7 @@ function getChartOptions(height: number) {
       toolbar: {
         show: false,
       },
-      zoom: {
-        enabled: false,
-      },
-      sparkline: {
-        enabled: true,
-      },
+     
     },
     plotOptions: {},
     legend: {
@@ -66,17 +57,22 @@ function getChartOptions(height: number) {
       enabled: false,
     },
     fill: {
-      type: 'solid',
-      opacity: 1,
+      type: "gradient",
+      gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.4,
+          opacityTo: 0.2,
+          stops: [15, 120, 100]
+      }
     },
     stroke: {
       curve: 'smooth',
       show: true,
-      width: 2,
-      colors: [color1, 'transparent', 'transparent'],
+      width: 3,
+      colors: [color1, color2],
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      categories: ['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       axisBorder: {
         show: false,
       },
@@ -84,21 +80,23 @@ function getChartOptions(height: number) {
         show: false,
       },
       labels: {
-        show: false,
+        rotate: 0,
+        rotateAlways: true,
+        show: true,
         style: {
           colors: labelColor,
           fontSize: '12px',
         },
       },
-      crosshairs: {
-        show: false,
-        position: 'front',
-        stroke: {
-          color: strokeColor,
-          width: 1,
-          dashArray: 3,
-        },
-      },
+      // crosshairs: {
+      //   show: true,
+      //   position: 'front',
+      //   stroke: {
+      //     color: [color1, color2],
+      //     width: 1,
+      //     dashArray: 3,
+      //   },
+      // },
       tooltip: {
         enabled: true,
         formatter: undefined,
@@ -110,7 +108,7 @@ function getChartOptions(height: number) {
     },
     yaxis: {
       labels: {
-        show: false,
+        show: true,
         style: {
           colors: labelColor,
           fontSize: '12px',
@@ -144,11 +142,11 @@ function getChartOptions(height: number) {
       },
       y: {
         formatter: function (val: number) {
-          return '$' + val + ' thousands';
+          return '$' + val + '';
         },
       },
     },
-    colors: [color1, color2, color3],
+    colors: [color1, color2],
     grid: {
       borderColor: borderColor,
       strokeDashArray: 4,
@@ -159,8 +157,8 @@ function getChartOptions(height: number) {
       },
     },
     markers: {
-      colors: [color1Light, color2Light, color3Light],
-      strokeColors: [color1, color2, color3],
+      colors: [color1Light, color2Light],
+      strokeColors: [color1, color2],
       strokeWidth: 3,
     },
   };
