@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { ModalConfig, ModalComponent } from '../../_metronic/partials';
-import $ from "jquery";
-import moment from 'moment';
+declare $: any;
+declare moment: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -14,10 +14,12 @@ export class DashboardComponent implements OnInit {
     dismissButtonLabel: 'Submit',
     closeButtonLabel: 'Cancel'
   };
+
   @ViewChild('modal') private modalComponent: ModalComponent;
   constructor() {}
 
   ngOnInit(): void {
+    // @ts-ignore: Unreachable code error
     var picker = $('#kt_dashboard_daterangepicker');
     var start = moment();
     var end = moment();
