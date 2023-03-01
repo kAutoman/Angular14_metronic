@@ -61,20 +61,7 @@ import { StatsWidget3Component } from './stats/stats-widget3/stats-widget3.compo
 import { StatsWidget4Component } from './stats/stats-widget4/stats-widget4.component';
 import { StatsWidget5Component } from './stats/stats-widget5/stats-widget5.component';
 import { StatsWidget6Component } from './stats/stats-widget6/stats-widget6.component';
-import { TablesWidget1Component } from './tables/tables-widget1/tables-widget1.component';
-import { TablesWidget2Component } from './tables/tables-widget2/tables-widget2.component';
-import { TablesWidget3Component } from './tables/tables-widget3/tables-widget3.component';
-import { TablesWidget4Component } from './tables/tables-widget4/tables-widget4.component';
 import { TablesWidget5Component } from './tables/tables-widget5/tables-widget5.component';
-import { TablesWidget6Component } from './tables/tables-widget6/tables-widget6.component';
-import { TablesWidget7Component } from './tables/tables-widget7/tables-widget7.component';
-import { TablesWidget8Component } from './tables/tables-widget8/tables-widget8.component';
-import { TablesWidget9Component } from './tables/tables-widget9/tables-widget9.component';
-import { TablesWidget10Component } from './tables/tables-widget10/tables-widget10.component';
-import { TablesWidget11Component } from './tables/tables-widget11/tables-widget11.component';
-import { TablesWidget12Component } from './tables/tables-widget12/tables-widget12.component';
-import { TablesWidget13Component } from './tables/tables-widget13/tables-widget13.component';
-import { TablesWidget14Component } from './tables/tables-widget14/tables-widget14.component';
 // new
 import { CardsWidget20Component } from './_new/cards/cards-widget20/cards-widget20.component';
 import { CardsWidget17Component } from './_new/cards/cards-widget17/cards-widget17.component';
@@ -143,20 +130,7 @@ import { CardsWidget18Component } from './_new/cards/cards-widget18/cards-widget
     StatsWidget4Component,
     StatsWidget5Component,
     StatsWidget6Component,
-    TablesWidget1Component,
-    TablesWidget2Component,
-    TablesWidget3Component,
-    TablesWidget4Component,
     TablesWidget5Component,
-    TablesWidget6Component,
-    TablesWidget7Component,
-    TablesWidget8Component,
-    TablesWidget9Component,
-    TablesWidget10Component,
-    TablesWidget11Component,
-    TablesWidget12Component,
-    TablesWidget13Component,
-    TablesWidget14Component,
     CardsWidget20Component,
     CardsWidget17Component,
     ListsWidget26Component,
@@ -231,20 +205,7 @@ import { CardsWidget18Component } from './_new/cards/cards-widget18/cards-widget
     StatsWidget4Component,
     StatsWidget5Component,
     StatsWidget6Component,
-    TablesWidget1Component,
-    TablesWidget2Component,
-    TablesWidget3Component,
-    TablesWidget4Component,
     TablesWidget5Component,
-    TablesWidget6Component,
-    TablesWidget7Component,
-    TablesWidget8Component,
-    TablesWidget9Component,
-    TablesWidget10Component,
-    TablesWidget11Component,
-    TablesWidget12Component,
-    TablesWidget13Component,
-    TablesWidget14Component,
     // new
     CardsWidget20Component,
     CardsWidget17Component,

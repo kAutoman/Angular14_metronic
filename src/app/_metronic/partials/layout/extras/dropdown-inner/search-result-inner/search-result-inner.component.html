@@ -29,27 +29,6 @@
     </span>
     <!--end::Reset-->
 
-    <!--begin::Toolbar-->
-    <div class="position-absolute top-50 end-0 translate-middle-y" data-kt-search-element="toolbar" [ngClass]="searching || keyword.length > 0 ? 'd-none' : ''">
-      <!--begin::Preferences toggle-->
-      <div data-kt-search-element="preferences-show" class="btn btn-icon w-20px btn-sm btn-active-color-primary me-1" data-bs-toggle="tooltip" title="Show search preferences">
-          <span
-            [inlineSVG]="'./assets/media/icons/duotune/coding/cod001.svg'"
-            class="svg-icon svg-icon-1"
-          ></span>
-      </div>
-      <!--end::Preferences toggle-->
-
-      <!--begin::Advanced search toggle-->
-      <div data-kt-search-element="advanced-options-form-show" class="btn btn-icon w-20px btn-sm btn-active-color-primary" data-bs-toggle="tooltip" title="Show more search options">
-          <span
-            [inlineSVG]="'./assets/media/icons/duotune/arrows/arr072.svg'"
-            class="svg-icon svg-icon-2"
-          ></span>
-      </div>
-      <!--end::Advanced search toggle-->
-    </div>
-    <!--end::Toolbar-->
   </form>
   <!--end::Form-->
 
@@ -91,40 +70,115 @@
 
   <!--begin::Recently viewed-->
   <div data-kt-search-element="results" [ngClass]="keyword.length > 0 ? 'd-none' : ''">
-    <!--begin::Items-->
-    <div class="scroll-y mh-200px mh-lg-325px">
-      <!--begin::Category title-->
-      <h3 class="fs-5 text-muted m-0 pb-5" data-kt-search-element="category-title">
-        Recently Searched
-      </h3>
-      <!--end::Category title-->
-
-      <!--begin::Item-->
-      <a href="#" *ngFor="let item of recentlySearchedModels" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-        <!--begin::Symbol-->
-        <div class="symbol symbol-40px me-4">
-          <img *ngIf="item.image" src="{{ item.image }}" alt=""/>
-
-          <span class="symbol-label bg-light">
-            <span
-              *ngIf="item.icon"
-              [inlineSVG]="item.icon"
-              class="svg-icon svg-icon-2 svg-icon-primary"
-            ></span>
-          </span>
+    <!--begin::Preferences-->
+    <form class="mh-500px mh-lg-500px">
+      <!--begin::Heading-->
+      <h3 class="fw-semibold text-dark mb-7">Advanced Search</h3>
+      <!--end::Heading-->
+      <!--begin::Input group-->
+      <div class="mb-5">
+        <input type="text" class="form-control form-control-sm form-control-solid" placeholder="Contains the word" name="query" />
+      </div>
+      <!--end::Input group-->
+      <!--begin::Input group-->
+      <div class="mb-5">
+        <!--begin::Radio group-->
+        <div class="nav-group nav-group-fluid">
+          <!--begin::Option-->
+          <label>
+            <input type="radio" class="btn-check" name="type" value="has" checked="checked" />
+            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary">All</span>
+          </label>
+          <!--end::Option-->
+          <!--begin::Option-->
+          <label>
+            <input type="radio" class="btn-check" name="type" value="users" />
+            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Users</span>
+          </label>
+          <!--end::Option-->
+          <!--begin::Option-->
+          <label>
+            <input type="radio" class="btn-check" name="type" value="orders" />
+            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Orders</span>
+          </label>
+          <!--end::Option-->
+          <!--begin::Option-->
+          <label>
+            <input type="radio" class="btn-check" name="type" value="projects" />
+            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Projects</span>
+          </label>
+          <!--end::Option-->
         </div>
-        <!--end::Symbol-->
-
-        <!--begin::Title-->
-        <div class="d-flex flex-column justify-content-start fw-bold">
-          <span class="fs-6 fw-bold">{{ item.title }}</span>
-          <span class="fs-7 fw-bold text-muted">{{ item.description }}</span>
+        <!--end::Radio group-->
+      </div>
+      <!--end::Input group-->
+      <!--begin::Input group-->
+      <div class="mb-5">
+        <input type="text" name="assignedto" class="form-control form-control-sm form-control-solid" placeholder="Assigned to" value="" />
+      </div>
+      <!--end::Input group-->
+      <!--begin::Input group-->
+      <div class="mb-5">
+        <input type="text" name="collaborators" class="form-control form-control-sm form-control-solid" placeholder="Collaborators" value="" />
+      </div>
+      <!--end::Input group-->
+      <!--begin::Input group-->
+      <div class="mb-5">
+        <!--begin::Radio group-->
+        <div class="nav-group nav-group-fluid">
+          <!--begin::Option-->
+          <label>
+            <input type="radio" class="btn-check" name="attachment" value="has" checked="checked" />
+            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary">Has attachment</span>
+          </label>
+          <!--end::Option-->
+          <!--begin::Option-->
+          <label>
+            <input type="radio" class="btn-check" name="attachment" value="any" />
+            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Any</span>
+          </label>
+          <!--end::Option-->
         </div>
-        <!--end::Title-->
-      </a>
-      <!--end::Item-->
-    </div>
-    <!--end::Items-->
+        <!--end::Radio group-->
+      </div>
+      <!--end::Input group-->
+      <!--begin::Input group-->
+      <div class="mb-5">
+        <select name="timezone" aria-label="Select a Timezone" data-control="select2" data-placeholder="date_period" class="form-select form-select-sm form-select-solid">
+          <option value="next">Within the next</option>
+          <option value="last">Within the last</option>
+          <option value="between">Between</option>
+          <option value="on">On</option>
+        </select>
+      </div>
+      <!--end::Input group-->
+      <!--begin::Input group-->
+      <div class="row mb-8">
+        <!--begin::Col-->
+        <div class="col-6">
+          <input type="number" name="date_number" class="form-control form-control-sm form-control-solid" placeholder="Lenght" value="" />
+        </div>
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-6">
+          <select name="date_typer" aria-label="Select a Timezone" data-control="select2" data-placeholder="Period" class="form-select form-select-sm form-select-solid">
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+            <option value="months">Months</option>
+            <option value="years">Years</option>
+          </select>
+        </div>
+        <!--end::Col-->
+      </div>
+      <!--end::Input group-->
+      <!--begin::Actions-->
+      <div class="d-flex justify-content-end">
+        <button type="reset" class="btn btn-sm btn-light fw-bold btn-active-light-primary me-2" data-kt-search-element="advanced-options-form-cancel">Cancel</button>
+        <a href="../../demo2/dist/pages/search/horizontal.html" class="btn btn-sm fw-bold btn-primary" data-kt-search-element="advanced-options-form-search">Search</a>
+      </div>
+      <!--end::Actions-->
+    </form>
+    <!--end::Preferences-->
   </div>
   <!--end::Recently viewed-->
 

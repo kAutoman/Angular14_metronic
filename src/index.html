@@ -10,12 +10,28 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700">
   <!-- SPLASH SCREEN-->
   <link rel="stylesheet" id="layout-styles-anchor" href="./assets/splash-screen.css" />
+  <link rel="stylesheet" id="layout-styles-anchor" href="./assets/plugins.bundle.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
 <body root id="kt_body" class="mat-typography">
   <!-- <body root id="kt_body" class="mat-typography" direction="rtl" dir="rtl" style="direction: rtl"></body> -->
   <!--begin::Theme mode setup on page load-->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script type="text/javascript" src="./assets/plugins.bundle.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
   <script>
     if (document.documentElement) {
       var defaultThemeMode = "system";
@@ -34,6 +50,195 @@
 
       document.documentElement.setAttribute("data-theme", themeMode);
     }
+
+    const createDateRangePickers = function () {
+      // Check if jQuery included
+      if (typeof jQuery == 'undefined') {
+        console.error('Jquery not loaded yet');
+        return;
+      }
+
+      // Check if daterangepicker included
+      if (typeof $.fn.daterangepicker === 'undefined') {
+        console.error('daterangepicker not loaded yet.')
+        return;
+      }
+
+      var elements = [].slice.call(document.querySelectorAll('[data-kt-daterangepicker="true"]'));
+      var start = moment().subtract(29, 'days');
+      var end = moment();
+
+      elements.map(function (element) {
+        if (element.getAttribute("data-kt-initialized") === "1") {
+          return;
+        }
+
+        var display = element.querySelector('div');
+        var attrOpens = element.hasAttribute('data-kt-daterangepicker-opens') ? element.getAttribute('data-kt-daterangepicker-opens') : 'left';
+        var range = element.getAttribute('data-kt-daterangepicker-range');
+
+        var cb = function (start, end) {
+          var current = moment();
+
+          if (display) {
+            if (current.isSame(start, "day") && current.isSame(end, "day")) {
+              display.innerHTML = start.format('D MMM YYYY');
+            } else {
+              display.innerHTML = start.format('D MMM YYYY') + ' - ' + end.format('D MMM YYYY');
+            }
+          }
+        }
+
+        if (range === "today") {
+          start = moment();
+          end = moment();
+        }
+
+        $(element).daterangepicker({
+          startDate: start,
+          endDate: end,
+          opens: attrOpens,
+          ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          }
+        }, cb);
+
+        cb(start, end);
+
+        element.setAttribute("data-kt-initialized", "1");
+      });
+    }
+
+    var initMap = function () {
+      // Check if amchart library is included
+      if (typeof am5 === 'undefined') {
+        console.error('amchart plugin not loaded.')
+        return;
+      }
+
+      var element = document.getElementById("kt_maps_widget_1_map");
+
+      if (!element) {
+        return;
+      }
+
+      var root;
+
+      var init = function () {
+        // Create root element
+        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+        root = am5.Root.new(element);
+
+        // Set themes
+        // https://www.amcharts.com/docs/v5/concepts/themes/
+        root.setThemes([am5themes_Animated.new(root)]);
+
+        // Create the map chart
+        // https://www.amcharts.com/docs/v5/charts/map-chart/
+        var chart = root.container.children.push(
+            am5map.MapChart.new(root, {
+            panX: "translateX",
+            panY: "translateY",
+            projection: am5map.geoMercator(),
+            paddingLeft: 0,
+            paddingrIGHT: 0,
+            paddingBottom: 0,
+            homeZoomLevel: 5
+          })
+        );
+
+        // Create main polygon series for countries
+        // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/
+        var polygonSeries = chart.series.push(
+          am5map.MapPolygonSeries.new(root, {
+            geoJSON: am5geodata_worldLow,
+            exclude: ["AQ"],
+          })
+        );
+
+        polygonSeries.mapPolygons.template.setAll({
+          tooltipText: "{name}",
+          toggleKey: "active",
+          interactive: true,
+          fill: am5.color('#323248'),
+        });
+
+        polygonSeries.mapPolygons.template.states.create("hover", {
+          fill: am5.color('#50cd89'),
+        });
+
+        polygonSeries.mapPolygons.template.states.create("active", {
+          fill: am5.color('#50cd89'),
+        });
+
+        // Highlighted Series
+        // Create main polygon series for countries
+        // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/
+        var polygonSeriesHighlighted = chart.series.push(
+          am5map.MapPolygonSeries.new(root, {
+            //geoJSON: am5geodata_usaLow,
+            geoJSON: am5geodata_worldLow,
+            include: ['US', 'BR', 'DE', 'AU', 'JP']
+          })
+        );
+
+        polygonSeriesHighlighted.mapPolygons.template.setAll({
+          tooltipText: "{name}",
+          toggleKey: "active",
+          interactive: true,
+        });
+
+        var colors = am5.ColorSet.new(root, {});
+
+        polygonSeriesHighlighted.mapPolygons.template.set(
+          "fill",
+          am5.color('#009ef7'),
+        );
+
+        polygonSeriesHighlighted.mapPolygons.template.states.create("hover", {
+          fill: root.interfaceColors.get("primaryButtonHover"),
+        });
+
+        polygonSeriesHighlighted.mapPolygons.template.states.create("active", {
+          fill: root.interfaceColors.get("primaryButtonHover"),
+        });
+
+        // Add zoom control
+        // https://www.amcharts.com/docs/v5/charts/map-chart/map-pan-zoom/#Zoom_control
+        //chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
+
+        // Set clicking on "water" to zoom out
+        chart.chartContainer
+          .get("background")
+          .events.on("click", function () {
+            chart.goHome();
+          });
+
+        chart.events.on("ready", function(ev) {
+            chart.zoomToMapObject(polygonSeries.getPolygonById("IN"));
+        });
+
+        // Make stuff animate on load
+        chart.appear(1000, 100);
+      }
+
+      // On amchart ready
+      am5.ready(function () {
+        init();
+      }); // end am5.ready()
+    };
+
+    setTimeout(() => {
+      createDateRangePickers();
+      initMap();
+    }, 1000)
+
+
   </script>
   <!--end::Theme mode setup on page load-->
   <div id="splash-screen" class="splash-screen">
